@@ -20,7 +20,6 @@
 
 - has_many :items
 - has_many :orders
-- has_one  :address
 
 
 ## items テーブル
@@ -41,7 +40,6 @@
 
 - belongs_to :user
 - has_one    :order
-- has_one    :address
 
 
 
@@ -64,17 +62,16 @@
 
 ## addresses テーブル
 
-| Column               | Type       | Options       |
-| -------------------- | ---------- | ------------- |
-| postal_code          | string     | null: false,  |
-| prefectures_id       | integer    | null: false,  |
-| city                 | string     | null: false,  |
-| street               | string     | null: false,  |
-| building             | string     |               |
-| phone_number         | string     | null: false,  |
+| Column               | Type       | Options                       |
+| -------------------- | ---------- | ----------------------------- |
+| postal_code          | string     | null: false,                  |
+| prefectures_id       | integer    | null: false,                  |
+| city                 | string     | null: false,                  |
+| street               | string     | null: false,                  |
+| building             | string     |                               |
+| phone_number         | string     | null: false,                  |
+| order                | references | null: false,foreign_key:true  |
 
 ### Association
 
-- belongs_to :item
-- belongs_to :user
 - belongs_to :order
