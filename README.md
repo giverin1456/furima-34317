@@ -19,30 +19,29 @@
 ### Association
 
 - has_many :items
-- has_many :comments
-- has_many :order
-
+- has_many :orders
+- has_one  :address
 
 
 ## items テーブル
 
-| Column      | Type          | Options                        |
-| ----------- | ------------- | ------------------------------ |
-| name        | string        | null: false                    |
-| text        | text          | null: false                    |
-| category_id | integer       | null: false                    |
-| status_id   | integer       | null: false                    |
-| send_id     | integer       | null: false                    |
-| area_id     | integer       | null: false                    |
-| day_id      | integer       | null: false                    |
-| price       | integer       | null: false                    |
-| user        | references    | null: false, foreign_key: true |
+| Column         | Type          | Options                        |
+| -------------- | ------------- | ------------------------------ |
+| name           | string        | null: false                    |
+| text           | text          | null: false                    |
+| category_id    | integer       | null: false                    |
+| status_id      | integer       | null: false                    |
+| send_id        | integer       | null: false                    |
+| prefectures_id | integer       | null: false                    |
+| day_id         | integer       | null: false                    |
+| price          | integer       | null: false                    |
+| user           | references    | null: false, foreign_key: true |
 
 ### Association
 
-- has_many :comments
-- belongs_to :users
-- has_many :order
+- belongs_to :user
+- has_one    :order
+- has_one    :address
 
 
 
@@ -56,9 +55,9 @@
 
 ### Association
 
-- belongs_to :items
-- belongs_to :users
-- has_many   :address
+- belongs_to :item
+- belongs_to :user
+- has_one    :address
 
 
 
@@ -68,7 +67,7 @@
 | Column               | Type       | Options       |
 | -------------------- | ---------- | ------------- |
 | postal_code          | string     | null: false,  |
-| prefectures          | string     | null: false,  |
+| prefectures_id       | integer    | null: false,  |
 | city                 | string     | null: false,  |
 | street               | string     | null: false,  |
 | building             | string     |               |
@@ -76,20 +75,6 @@
 
 ### Association
 
-- belongs_to :items
-- belongs_to :users
-
-
-
-##  commentsテーブル
-
-| Column  | Type       | Options                        |
-| ------- | ---------- | ------------------------------ |
-| text    | text       | null: false                    |
-| user    | references | null: false, foreign_key: true |
-| item    | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :items
-- belongs_to :users
+- belongs_to :item
+- belongs_to :user
+- belongs_to :order
