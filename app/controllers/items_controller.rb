@@ -26,6 +26,11 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    if user_signed_in? && current_user.id && @item.order == nil
+      set_item
+   else
+     redirect_to root_path
+   end
   end
 
   def update
