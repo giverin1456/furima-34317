@@ -1,24 +1,39 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :item_set, only: [:index, :create]
+
   def index
-    @item = Item.find(params[:item_id])
     @item_order = ItemOrder.new
+    
   end
 
   def create
     @item_order = ItemOrder.new(order_params)
-    @item = Item.find(params[:item_id])
     if @item_order.valid?
+      pay_item
       @item_order.save
       redirect_to root_path
     else
-      # binding.pry
       render :index
     end
   end
 
   private
   def order_params
-    params.require(:item_order).permit(:postal_code, :prefecture_id, :city, :street, :building, :phone_number).merge(item_id: params[:item_id], user_id: current_user.id )
+    params.require(:item_order).permit(:postal_code, :prefecture_id, :city, :street, :building, :phone_number).merge(item_id: params[:item_id], user_id: current_user.id, token: params[:token])
   end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,
+      card: order_params[:token],
+      currency: 'jpy'
+    )
+  end
+
+  def item_set
+    @item = Item.find(params[:item_id])
+  end
+
 end
