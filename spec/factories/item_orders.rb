@@ -6,5 +6,8 @@ FactoryBot.define do
     street           {"1丁目"}
     postal_code      {"123-4567"}
     phone_number     {"09012345678"}
+    building         {'abcビル'}
+    user_id          {2}
+    item_id          {3}
   end
 end

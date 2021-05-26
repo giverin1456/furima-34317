@@ -10,6 +10,11 @@ RSpec.describe ItemOrder, type: :model do
         it '全ての必須項目が入力されている時購入できる' do
           expect(@item_order).to be_valid
         end
+
+        it 'buildingがなくても購入できる' do
+          @item_order.building = nil
+          expect(@item_order).to be_valid
+        end
       end
 
       context '商品の購入ができない時' do
@@ -56,7 +61,6 @@ RSpec.describe ItemOrder, type: :model do
         end
 
         it 'postal_codeはハイフンを入れて8文字でなければ購入できない' do
-          # binding.pry
           @item_order.postal_code = "1111111"
           @item_order.valid?
           expect(@item_order.errors.full_messages).to include "Postal code is the wrong length (should be 8 characters)"
@@ -65,8 +69,21 @@ RSpec.describe ItemOrder, type: :model do
         it '電話番号は11桁以内の数値のみ保存可能' do
           @item_order.phone_number = "090123456789"
           @item_order.valid?
-          expect(@item_order.errors.full_messages).to include "Phone number is the wrong length (should be 11 characters)"
+          expect(@item_order.errors.full_messages).to include "Phone number is invalid"
         end
+
+        it 'user_idが空では購入できない' do
+          @item_order.user_id = nil
+          @item_order.valid?
+          expect(@item_order.errors.full_messages).to include "User can't be blank"
+        end
+
+        it 'item_idが空では購入できない' do
+          @item_order.item_id = nil
+          @item_order.valid?
+          expect(@item_order.errors.full_messages).to include "Item can't be blank"
+        end
+
       end
     end
 end
