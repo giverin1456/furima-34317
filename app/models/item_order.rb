@@ -4,11 +4,11 @@ class ItemOrder
 
   with_options presence: true do
     validates :token
-    validates :prefecture_id
     validates :city
     validates :street
+    validates :prefecture_id, numericality: { other_than: 1 }
     validates :postal_code, format: { with: /\A\d{3}[-]\d{4}\z/ }, length: { is: 8 }
-    validates :phone_number, format: { with: /\A[0-9]+\z/ }, length: { is: 11 }
+    validates :phone_number, format: { with: /\A\d{11}\z/ }, length: { is: 11 }
   end
   
   def save
