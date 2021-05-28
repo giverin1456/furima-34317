@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
   end
 
   def order_set
-    if user_signed_in? && current_user.id && @item.order == nil
+    if @item.user_id == current_user.id && @item.order == nil
       set_item
     else
       redirect_to root_path

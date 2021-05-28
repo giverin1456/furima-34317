@@ -89,7 +89,6 @@ RSpec.describe ItemOrder, type: :model do
         end
 
         it 'item_idが空では購入できない' do
-          # binding.pry
           @item_order.item_id = nil
           @item_order.valid?
           expect(@item_order.errors.full_messages).to include "Item can't be blank"
